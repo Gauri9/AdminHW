@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { NativeBaseProvider, Box, Heading, Divider } from "native-base";
-import { theme } from "AdminHW/src/utils/theme.js";
+import { theme } from "C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/theme.js";
 
 function OrderScreen(){
   const [selectedOption, setSelectedOption] = useState('delivery');

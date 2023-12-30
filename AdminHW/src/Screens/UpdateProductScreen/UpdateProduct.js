@@ -9,8 +9,8 @@ import {
   NativeBaseProvider,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import { theme } from "AdminHW/AdminHW/src/utils/theme.js";
-import * as api from "AdminHW/src/utils/api.js";
+import { theme } from "C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/theme.js";
+import * as api from "C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/api.js";
 // import styles from "./styles";
 
 const UpdateProduct = () => {
@@ -59,7 +59,7 @@ const UpdateProduct = () => {
           variant="rounded"
           InputLeftElement={
             <Image
-              source={require("AdminHW/assets/icons/search-icon.png")}
+              source={require("C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/assets/icons/search-icon.png")}
               style={styles.searchIcon}
             />
           }

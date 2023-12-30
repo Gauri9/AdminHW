@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import {Button, NativeBaseProvider} from 'native-base';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { theme } from "AdminHW/src/utils/theme.js";
+import { theme } from "C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/theme.js";
 import { margin } from 'styled-system';
 
 const UpdateProductForm = () => {

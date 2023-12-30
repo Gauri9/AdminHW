@@ -1,20 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, TextInput, Alert, StyleSheet } from 'react-native';
 import { NativeBaseProvider, Button, Text } from "native-base";
-import { theme } from "AdminHW/src/utils/theme.js";
+import { useCameraDevice, Camera, NoCameraDeviceError, useCameraPermission } from 'react-native-vision-camera';
+import { theme } from "C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/theme.js";
 import styles from "./styles";
 
 const AddNewProduct = () => {
   const [productTitle, setProductTitle] = useState('');
   const [productCompany, setProductCompany] = useState('');
   const [productCategory, setProductCategory] = useState('');
-  const [productStockQuantity, setProductStockQuantity] = useState(0);
+  const [productStockQuantity, setProductStockQuantity] = useState('0');
   const [productMRP, setProductMRP] = useState('');
   const [productDiscountedPrice, setProductDiscountedPrice] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [productAvailabilityStatus, setProductAvailabilityStatus] = useState(''); //dropdown ['available', 'out of stock']
   // const [productImages, setProductImages] = useState([]); // urls for images on gcp
+  const { hasPermission, requestPermission } = useCameraPermission();
+  const [device, setDevice] = useState(null);
 
+  // const device = useCameraDevice('back');
+
+  useEffect(()=>{
+    const checkPermission = async () => {
+      await requestPermission();
+      if(hasPermission == true){
+        const _device = useCameraDevice('back');
+        setDevice(_device)
+        console.log('-------------------------------------------device---------------------------------------------------', device);
+      }
+    }
+    checkPermission();
+    // console.log(device);
+  },[])
 
   const handleAddProduct = () => {
     if (!productTitle || !productDescription || !productDiscountedPrice) {
@@ -100,12 +117,23 @@ const AddNewProduct = () => {
       />
 
     <Text style={styles.label}>Availability Status</Text>
-      <TextInput
+    <TextInput
         value={productAvailabilityStatus}
         onChangeText={setProductAvailabilityStatus}
         style={styles.input}
         placeholder="Enter availability status"
       />
+      
+
+    <Text style={styles.label}>Add Images of the Medicines</Text>
+        {/* {device == null && <NoCameraDeviceError/>} */}
+        {device!=null &&
+        <Camera
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={true}
+        />}
+ 
 
       <Button style={styles.submit} onPress={handleAddProduct}>Add Product</Button>
     </ScrollView>

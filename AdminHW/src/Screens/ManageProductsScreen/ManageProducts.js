@@ -3,8 +3,7 @@ import { View, TouchableOpacity } from "react-native";
 import { NativeBaseProvider, Box, Text } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
-import { theme } from "AdminHW/src/utils/theme.js";
-
+import { theme } from "C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/theme.js";
 
 function ManageProducts() {
 

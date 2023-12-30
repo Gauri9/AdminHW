@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { theme } from "AdminHW/src/utils/theme.js";
+import { theme } from "C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/theme.js";
 
 export default styles = StyleSheet.create({
     container:{
