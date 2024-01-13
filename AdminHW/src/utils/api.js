@@ -8,6 +8,15 @@ export const postCredentials = async (creds) => await axios.post(`${apiBaseUrl}/
 export const validateCredentials = async (creds) => await axios.post(`${apiBaseUrl}/login/validate`, creds); //login page for authentication
 
 //product
+export const addNewProduct = async (productData) => {
+    console.log('add new product...')
+    const headers = {
+        'Content-Type': 'application/json',
+      };
+    const response =  axios.post(`${apiBaseUrl}/product`,{productData},{headers});
+    console.log(response)
+    return response;
+}
 export const getProducts = async (page, pageSize) => await axios.get(`${apiBaseUrl}/product/getproducts`, {
     params: {
         page: page,

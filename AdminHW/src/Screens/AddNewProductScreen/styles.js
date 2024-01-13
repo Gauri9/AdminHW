@@ -25,6 +25,7 @@ export default styles = StyleSheet.create({
       borderWidth: 1,
       marginBottom: 16,
       paddingHorizontal: 8,
+      color: 'black'
     },
     multilineInput: {
       height: 100,
@@ -32,6 +33,8 @@ export default styles = StyleSheet.create({
     },
     submit:{
       backgroundColor: theme.primaryColor,
-      marginBottom: 50
-    }
+      marginBottom: 50,
+      marginTop: 25
+    },
+    
   });
