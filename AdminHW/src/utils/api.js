@@ -13,7 +13,8 @@ export const addNewProduct = async (productData) => {
     const headers = {
         'Content-Type': 'application/json',
       };
-    const response =  axios.post(`${apiBaseUrl}/product`,{productData},{headers});
+    const response =  await axios.post('https://medical-app-5gdu.onrender.com/product',{productData:productData},{headers});
+
     console.log(response)
     return response;
 }

@@ -36,5 +36,23 @@ export default styles = StyleSheet.create({
       marginBottom: 50,
       marginTop: 25
     },
+    buttonStyle: {
+      backgroundColor: '#307ecc',
+      borderWidth: 0,
+      color: '#FFFFFF',
+      borderColor: '#307ecc',
+      height: 40,
+      alignItems: 'center',
+      borderRadius: 30,
+      marginLeft: 35,
+      marginRight: 35,
+      marginTop: 15,
+    },
+    buttonTextStyle: {
+      color: '#FFFFFF',
+      paddingVertical: 10,
+      fontSize: 16,
+    },
+  
     
   });

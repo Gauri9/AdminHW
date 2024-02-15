@@ -2,9 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import {Picker} from '@react-native-picker/picker';
 import { ScrollView, View, TextInput, Alert, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { NativeBaseProvider, Button, Text, Radio } from "native-base";
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
+
 import { theme } from "C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/theme.js";
 import styles from "./styles";
 import * as api from 'C:/Users/Gauri/FULL_STACK/AdminHW/AdminHW/AdminHW/src/utils/api.js'
+import axios from 'axios';
 // import CameraComponent from '../../components/CameraComponent/CameraComponent.js';
 
 const AddNewProduct = () => {
@@ -16,7 +20,8 @@ const AddNewProduct = () => {
   const [productCategory, setProductCategory] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [productAvailabilityStatus, setProductAvailabilityStatus] = useState(''); //radio buttons ['available(yes)', 'out of stock(no)']
-  // const [productImages, setProductImages] = useState([]); // urls for images on gcp
+  const [productImages, setProductImages] = useState({}); // urls for images on gcp
+  const [files, setFiles] = useState(null);
 
   /* States for Validations */
   const [isMrpText, setIsMrpText] = useState(false)
@@ -44,7 +49,7 @@ const AddNewProduct = () => {
       availabilityStatus: productAvailabilityStatus
     };
     // let productData = { 
-    //   "title": "trailMedicine105", 
+    //   "title": "trailMedicine114", 
     //   "company": "Torrento Pharmaceuticals", 
     //   "quantity":"10pc", 
     //   "price": 19.39, 
@@ -54,15 +59,13 @@ const AddNewProduct = () => {
     //   "availabilityStatus": "yes"
     // }
 
-    console.log(productData);
-
     // Make a network request to your backend to add the product
     try{
       const res = await api.addNewProduct(productData)
       Alert.alert('Success', 'Submitted Succefully!!');
     }
     catch(error){
-      console.log('error while inserting the product data')
+      console.log('error while inserting the product data', error)
     }
     
 
@@ -76,6 +79,55 @@ const AddNewProduct = () => {
     setProductCategory('');
     setProductAvailabilityStatus('')
   };
+
+  const selectFile = async () => {
+    try {
+      const pickedFiles = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+        allowMultiSelection: true
+        
+      });
+      console.log('pickedFile',pickedFiles);
+      setProductImages(pickedFiles)
+      
+      //multiple files
+      const promises = pickedFiles.map(file => RNFS.readFile(file.uri, 'base64'))
+      const blobs = Promise.all(promises)
+      setFiles(blobs)
+
+      //single file
+      // await RNFS.readFile(pickedFile.uri, 'base64').then(blob => {
+      //   // console.log('base64',blob);
+      //   setFiles(blob);
+      // });
+
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log(err);
+      } else {
+        console.log(error);
+        throw err;
+      }
+    }
+
+  };
+
+  const uploadImage = async () => {
+    console.log('inside uploadImage...')
+    // Check if any file is selected or not
+    if (productImages != null && files != null) {
+      console.log('productImages', productImages)
+      let res = await axios.post('http://192.168.1.100:5000/product/uploadimages',{data: files, productImages:productImages, productTitle:'Omez 360'})
+      // let res = await axios.post('https://medical-app-5gdu.onrender.com/product/uploadimages',{data:singleFile,filename: 'filename.jpeg', productTitle:'dummy 1'})
+      // console.log(res)
+    } 
+    else {
+      // If no file selected the show alert
+      alert('Please Select File first');
+    }
+  };
+
+
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -169,6 +221,19 @@ const AddNewProduct = () => {
 
     {/* <Text style={styles.label}>Add Images of the Medicines</Text> */}
     {/* <CameraComponent/> */}
+
+    <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={selectFile}>
+        <Text style={styles.buttonTextStyle}>Select File</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={uploadImage}>
+        <Text style={styles.buttonTextStyle}>Upload File</Text>
+      </TouchableOpacity>
 
       <Button style={styles.submit} onPress={handleAddProduct}>Add Product</Button>
     </ScrollView>
